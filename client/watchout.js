@@ -16,13 +16,13 @@ var enemies = svg.selectAll("circle")
   .enter()
   .append("circle");
 
-function generateLocation(d, max) {
+function generateLocation(r, max) {
   var loc = Math.random() * max;
   
-  if (loc >=max) {
-    return loc-d;
-  } else if (loc <=0) {
-    return loc + d;
+  if (loc >= (max - r)) {
+    return loc-r;
+  } else if (loc <= r) {
+    return loc + r;
   }
   
   return loc;
@@ -30,7 +30,7 @@ function generateLocation(d, max) {
 };
 
 enemies.attr("r", function(d) {
-  return d;
+  return d + 'px';
   })
   .attr("cx", function(d) {
     return generateLocation(d, w)
@@ -41,6 +41,11 @@ enemies.attr("r", function(d) {
   .attr("position", 'absolute')
   .attr("class", 'enemies');
 
+enemies.transition().duration(1000).attr("cx", function(d) {
+  return generateLocation(d, w);
+}).attr("cy", function(d) {
+  return generateLocation(d, h);
+});
 
   
 //Width and height
