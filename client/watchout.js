@@ -11,7 +11,7 @@ var svg = d3.select("body")
   .attr("height", h)
   .attr("position", 'relative');
 
-var circles = svg.selectAll("circle")
+var enemies = svg.selectAll("circle")
   .data(sizes)
   .enter()
   .append("circle");
@@ -29,12 +29,17 @@ function generateLocation(d, max) {
 
 };
 
-circles.attr("r", function(d) {
+enemies.attr("r", function(d) {
   return d;
   })
-  .attr("cx", generateLocation(d, w))
-  .attr("cy", generateLocation(d, h))
-  .attr("position", 'absolute');
+  .attr("cx", function(d) {
+    return generateLocation(d, w)
+  })
+  .attr("cy", function(d) {
+    return generateLocation(d, h)
+  })
+  .attr("position", 'absolute')
+  .attr("class", 'enemies');
 
 
   
@@ -54,7 +59,7 @@ circles.attr("r", function(d) {
 // var circles = svg.selectAll("circle")
 //     .data(dataset)
 //     .enter()
-//     .append("circle");
+//     .append("");
 
 // circles.attr("cx", function(d, i) {
 //       return (i * 50) + 25;
