@@ -103,6 +103,70 @@ player.attr("r", function(d) {
   .attr("stroke-width", function(d) {return d.radius / 2})
   .style("cursor", "pointer")
   .call(drag);
+  //.event.on(listeningFor, action)
+
+
+
+  /*
+  -----collision-----
+  */
+
+  // var dispatchCollisionEvent = function(doc) {
+  //   var eventDetail = {};
+  //   var myEvent = doc.defaultView.CustomEvent("collision", eventDetail);
+  //   doc.dispatchEvent(myEvent);
+  // }
+
+  // dispatchCollisionEvent($('body'));
+
+  var score = 0;
+  var highScore = 0;
+  var collisions = 0;
+  var collisionTimer, moveTimer;
+  var collided = false;
+
+  var updateCurrentScore = function() {
+    score++;
+    d3.select('.current span').text(score);
+    setTimeout(updateCurrentScore, 100);
+  }
+
+  updateCurrentScore();
+  
+  // scoreTimer = setInterval(updateCurrentScore, 5);
+
+
+  // var collisionCheck = function() {
+  //  //var distance =
+  //   //if sum of 2 radii < distance between 2 radii; collision = true;
+  //   if(they collide) {
+  //     collided = true;
+  //     setTimeout(function() {collided = false;}, 900);
+  //   }
+  //   score = 0;
+  //   collisions++;
+  //   d3.select('.highscore span').text(highScore);
+  //   if (score > highScore) {
+  //     highScore = score;
+  //   }  
+  //   d3.select('.collisions span').text(collisions);
+  // }
+
+
+
+  // var collisionStart = function() {
+  //   if(!collided) {
+  //     enemies.each(function () {
+  //       var singleEnemy = d3.select(this);
+  //       collisionCheck(singleEnemy.attr('cx'), singleEnemy.attr('cy'));
+  //     })
+  //   }
+  // }
+
+  // collisionTimer = setInterval(collisionStart, 5);
+  // player.call(drag);
+  // moveTimer = setInterval(move, 1000);
+  // */
 
 
 
