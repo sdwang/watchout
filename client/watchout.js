@@ -1,15 +1,22 @@
-// start slingin' some d3 here.
-
-var sizes = [5, 5, 5, 6, 7, 8, 10, 10, 11, 12, 15, 18, 20, 24, 25];
+// Data
 
 var w = 960;
 var h = 500;
-
+/*
+-----SVG-----
+*/
 var svg = d3.select("body")
   .append("svg")
   .attr("width", w)
   .attr("height", h)
   .attr("position", 'relative');
+
+/*
+----Enemies-----
+*/
+
+var sizes = [5, 5, 5, 6, 7, 8, 10, 10, 11, 12, 15, 18, 20, 24, 25];
+
 
 var enemies = svg.selectAll("circle")
   .data(sizes)
@@ -30,7 +37,7 @@ function generateLocation(r, max) {
 };
 
 enemies.attr("r", function(d) {
-  return d + 'px';
+  return d;
   })
   .attr("cx", function(d) {
     return generateLocation(d, w)
@@ -43,8 +50,9 @@ enemies.attr("r", function(d) {
 
 
 var makeEnemies = function() {
-  
-  enemies.transition().duration(1000).attr("cx", function(d) {
+  var enemySelector = svg.selectAll('.enemies').data(sizes);
+
+  enemySelector.transition().duration(1000).attr("cx", function(d) {
     return generateLocation(d, w);
   }).attr("cy", function(d) {
     return generateLocation(d, h);
@@ -53,30 +61,30 @@ var makeEnemies = function() {
   setTimeout(makeEnemies,1000);
 };
 
-makeEnemies();
+//makeEnemies();
   
-//Width and height
-// var w = 500;
-// var h = 50;
+/*
+----Player----
+*/
 
-// //Data
-// var dataset = [ 5, 10, 15, 20, 25 ];
+var playerData = [10];
 
-// //Create SVG element
-// var svg = d3.select("body")
-//       .append("svg")
-//       .attr("width", 500)
-//       .attr("height", 50);
+var player = svg.selectAll("circle")
+  .data(playerData)
+  .enter()
+  .append("circle");
 
-// var circles = svg.selectAll("circle")
-//     .data(dataset)
-//     .enter()
-//     .append("");
+player.attr("r", function(d) {
+  return d;
+  })
+  .attr("cx", w/2)
+  .attr("cy", h/2)
+  .attr("position", 'absolute')
+  .attr("class", 'player');
 
-// circles.attr("cx", function(d, i) {
-//       return (i * 50) + 25;
-//     })
-//      .attr("cy", h/2)
-//      .attr("r", function(d) {
-//       return d;
-//      });
+
+
+
+
+
+
