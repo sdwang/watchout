@@ -1,17 +1,31 @@
-/*circle {
-  -webkit-animation-name: tutsFade;
-  -webkit-animation-duration: 4s;
-  -webkit-animation-delay: 1s;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-  -webkit-animation-direction: alternate;
+/*.player {
+  color: red;
+}
+*/
+svg circle {
+  -webkit-animation:  kaboom 5s ease alternate infinite;
 };
 
 @-webkit-keyframes tutsFade {
   0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 0;
+  }
+  15% {
     opacity: 1;
   }
   100% {
-    opacity: 0;
+    opacity: 1;
   }
-}*/
+}
+
+@keyframes kaboom {
+  90% {
+    transform: scale(1.0);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}

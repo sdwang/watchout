@@ -59,8 +59,6 @@ enemies.attr("r", function(d) {
   .attr("id", function(d) {
     return d.name;
   })
-  .append('image')
-  .attr('xlink:href', 'asteroid.png');
 
 
 var makeEnemies = function() {
@@ -116,66 +114,66 @@ player.attr("r", function(d) {
   -----collision-----
   */
 
-  var score = 0;
-  var highScore = 0;
-  var collisions = 0
+var score = 0;
+var highScore = 0;
+var collisions = 0
 
-  var checkCollision = function() {
-    
-    var enemyInfo = {};
-    d3.selectAll('.enemies')[0].forEach(function(node) {
-      enemyInfo[node.id] = {};
-      enemyInfo[node.id].radius = node.r.animVal.value;
-      enemyInfo[node.id].cx = node.cx.animVal.value;
-      enemyInfo[node.id].cy = node.cy.animVal.value;
-    });
+var checkCollision = function() {
+  
+  var enemyInfo = {};
+  d3.selectAll('.enemies')[0].forEach(function(node) {
+    enemyInfo[node.id] = {};
+    enemyInfo[node.id].radius = node.r.animVal.value;
+    enemyInfo[node.id].cx = node.cx.animVal.value;
+    enemyInfo[node.id].cy = node.cy.animVal.value;
+  });
 
-    var resetClock = function() {
-      if (score > highScore) {
-        highScore = score;
-        d3.select('.highscore span').text(highScore);
-      }
-
-      score = 0;
-
-      collisions++;
-      d3.select('.collisions span').text(collisions);
+  var resetClock = function() {
+    if (score > highScore) {
+      highScore = score;
+      d3.select('.highscore span').text(highScore);
     }
 
-    var findDistance = function(x1, y1, x2, y2) {
-      return Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
-    };
+    score = 0;
 
-    var playerR;
-    d3.selectAll('.player').each(function(d) {playerR = d.radius;});
-    var playerX;
-    d3.selectAll('.player')[0].forEach(function(node) {playerX = node.cx.animVal.value;})
-    var playerY;
-    d3.selectAll('.player')[0].forEach(function(node) {playerY = node.cy.animVal.value;})
-    
-    for (var key in enemyInfo) {
-      var totalRadii = enemyInfo[key].radius + playerR;
-      var distance = findDistance(enemyInfo[key].cx, enemyInfo[key].cy, playerX, playerY);
-      if (totalRadii > distance) {
-        resetClock();
-        break;
-      }
+    collisions++;
+    d3.select('.collisions span').text(collisions);
+  }
+
+  var findDistance = function(x1, y1, x2, y2) {
+    return Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
+  };
+
+  var playerR;
+  d3.selectAll('.player').each(function(d) {playerR = d.radius;});
+  var playerX;
+  d3.selectAll('.player')[0].forEach(function(node) {playerX = node.cx.animVal.value;})
+  var playerY;
+  d3.selectAll('.player')[0].forEach(function(node) {playerY = node.cy.animVal.value;})
+  
+  for (var key in enemyInfo) {
+    var totalRadii = enemyInfo[key].radius + playerR;
+    var distance = findDistance(enemyInfo[key].cx, enemyInfo[key].cy, playerX, playerY);
+    if (totalRadii > distance) {
+      resetClock();
+      break;
     }
-
-    setTimeout(checkCollision, 50);
-
   }
 
-  checkCollision();
+  setTimeout(checkCollision, 50);
+
+}
+
+checkCollision();
 
 
-  var updateCurrentScore = function() {
-    score++;
-    d3.select('.current span').text(score);
-    setTimeout(updateCurrentScore, 100);
-  }
+var updateCurrentScore = function() {
+  score++;
+  d3.select('.current span').text(score);
+  setTimeout(updateCurrentScore, 100);
+}
 
-  updateCurrentScore();
+updateCurrentScore();
   
 
 
