@@ -1,6 +1,6 @@
 // start slingin' some d3 here.
 
-var sizes = [5, 5, 5, 10, 10, 10, 15, 15, 20, 25];
+var sizes = [5, 5, 5, 6, 7, 8, 10, 10, 11, 12, 15, 18, 20, 24, 25];
 
 var w = 960;
 var h = 500;
@@ -41,12 +41,19 @@ enemies.attr("r", function(d) {
   .attr("position", 'absolute')
   .attr("class", 'enemies');
 
-enemies.transition().duration(1000).attr("cx", function(d) {
-  return generateLocation(d, w);
-}).attr("cy", function(d) {
-  return generateLocation(d, h);
-});
 
+var makeEnemies = function() {
+  
+  enemies.transition().duration(1000).attr("cx", function(d) {
+    return generateLocation(d, w);
+  }).attr("cy", function(d) {
+    return generateLocation(d, h);
+  });
+
+  setTimeout(makeEnemies,1000);
+};
+
+makeEnemies();
   
 //Width and height
 // var w = 500;
