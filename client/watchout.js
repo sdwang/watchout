@@ -55,7 +55,10 @@ enemies.attr("r", function(d) {
     return generateLocation(d.radius, h)
   })
   .attr("position", 'absolute')
-  .attr("class", 'enemies');
+  .attr("class", 'enemies')
+  .attr("id", function(d) {
+    return d.name;
+  })
 
 
 var makeEnemies = function() {
@@ -63,13 +66,13 @@ var makeEnemies = function() {
     return d.name
   });
 
-  enemySelector.transition().duration(1000).attr("cx", function(d) {
+  enemySelector.transition().duration(2000).attr("cx", function(d) {
     return generateLocation(d.radius, w);
   }).attr("cy", function(d) {
     return generateLocation(d.radius, h);
   });
 
-  setTimeout(makeEnemies,1000);
+  setTimeout(makeEnemies,2000);
 };
 
 makeEnemies();
@@ -111,19 +114,58 @@ player.attr("r", function(d) {
   -----collision-----
   */
 
-  // var dispatchCollisionEvent = function(doc) {
-  //   var eventDetail = {};
-  //   var myEvent = doc.defaultView.CustomEvent("collision", eventDetail);
-  //   doc.dispatchEvent(myEvent);
-  // }
-
-  // dispatchCollisionEvent($('body'));
-
   var score = 0;
   var highScore = 0;
-  var collisions = 0;
-  var collisionTimer, moveTimer;
-  var collided = false;
+  var collisions = 0
+
+  var checkCollision = function() {
+    
+    var enemyInfo = {};
+    d3.selectAll('.enemies')[0].forEach(function(node) {
+      enemyInfo[node.id] = {};
+      enemyInfo[node.id].radius = node.r.animVal.value;
+      enemyInfo[node.id].cx = node.cx.animVal.value;
+      enemyInfo[node.id].cy = node.cy.animVal.value;
+    });
+
+    var resetClock = function() {
+      if (score > highScore) {
+        highScore = score;
+        d3.select('.highscore span').text(highScore);
+      }
+
+      score = 0;
+
+      collisions++;
+      d3.select('.collisions span').text(collisions);
+    }
+
+    var findDistance = function(x1, y1, x2, y2) {
+      return Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
+    };
+
+    var playerR;
+    d3.selectAll('.player').each(function(d) {playerR = d.radius;});
+    var playerX;
+    d3.selectAll('.player')[0].forEach(function(node) {playerX = node.cx.animVal.value;})
+    var playerY;
+    d3.selectAll('.player')[0].forEach(function(node) {playerY = node.cy.animVal.value;})
+    
+    for (var key in enemyInfo) {
+      var totalRadii = enemyInfo[key].radius + playerR;
+      var distance = findDistance(enemyInfo[key].cx, enemyInfo[key].cy, playerX, playerY);
+      if (totalRadii > distance) {
+        resetClock();
+        break;
+      }
+    }
+
+    setTimeout(checkCollision, 50);
+
+  }
+
+  checkCollision();
+
 
   var updateCurrentScore = function() {
     score++;
@@ -133,41 +175,6 @@ player.attr("r", function(d) {
 
   updateCurrentScore();
   
-  // scoreTimer = setInterval(updateCurrentScore, 5);
-
-
-  // var collisionCheck = function() {
-  //  //var distance =
-  //   //if sum of 2 radii < distance between 2 radii; collision = true;
-  //   if(they collide) {
-  //     collided = true;
-  //     setTimeout(function() {collided = false;}, 900);
-  //   }
-  //   score = 0;
-  //   collisions++;
-  //   d3.select('.highscore span').text(highScore);
-  //   if (score > highScore) {
-  //     highScore = score;
-  //   }  
-  //   d3.select('.collisions span').text(collisions);
-  // }
-
-
-
-  // var collisionStart = function() {
-  //   if(!collided) {
-  //     enemies.each(function () {
-  //       var singleEnemy = d3.select(this);
-  //       collisionCheck(singleEnemy.attr('cx'), singleEnemy.attr('cy'));
-  //     })
-  //   }
-  // }
-
-  // collisionTimer = setInterval(collisionStart, 5);
-  // player.call(drag);
-  // moveTimer = setInterval(move, 1000);
-  // */
-
 
 
 
