@@ -1,0 +1,17 @@
+/*circle {
+  -webkit-animation-name: tutsFade;
+  -webkit-animation-duration: 4s;
+  -webkit-animation-delay: 1s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-direction: alternate;
+};
+
+@-webkit-keyframes tutsFade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}*/

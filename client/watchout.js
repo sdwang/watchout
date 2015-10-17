@@ -59,6 +59,8 @@ enemies.attr("r", function(d) {
   .attr("id", function(d) {
     return d.name;
   })
+  .append('image')
+  .attr('xlink:href', 'asteroid.png');
 
 
 var makeEnemies = function() {
